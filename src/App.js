@@ -1,4 +1,4 @@
-import "./styles.css";
+
 import React from "react";
 import Configurator from "./Configurator";
 import YourOrder from "./FinalYourOrder";
