@@ -1,17 +1,15 @@
 import React from "react";
 
-export default function YourOrder({ selected, currentPrice, title }) {
+export default function YourOrder({ selected, cost}) {
   return (
     <div>
-      {title}
+      <h3>Your order:</h3>
       <ul>
         {selected.map(({ value }, i) => (
           <li key={i}>{value}</li>
         ))}
       </ul>
-
-      <h4>{currentPrice}</h4>
+      <p>Pay: {cost}</p>
     </div>
   );
 }
-// Вау, все заработало
