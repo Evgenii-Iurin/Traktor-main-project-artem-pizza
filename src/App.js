@@ -3,37 +3,68 @@ import React from "react";
 import Configurator from "./Configurator";
 import YourOrder from "./FinalYourOrder";
 
-export default function App() {
-  const [cost, setCost] = React.useState(200);
-  const [selected, setSelected] = React.useState([]);
-  const [showYourOrderComponent, setShowYourOrderComponent] = React.useState(false)
-  const formInput = React.useRef();
+function calculateThePrice(size, countOfToppings) {
+  const costOfOneTopping = 29;
+  const currentPrice = countOfToppings.length * costOfOneTopping;
 
-  function finalCostOfOrder(event) {
-    event.preventDefault();
-    const item = formInput.current.querySelectorAll("input");
-   
-    for (let i = 0; i < item.length; i++) {
-      if (item[i].checked) {
-        setSelected((selected) => [...selected, { value: item[i].value }]);
-      }
+  if (countOfToppings.length > 0) {
+    return size === 30 ? 200 + currentPrice : 250 + currentPrice;
+  } else {
+    return size === 30 ? 200 : 250;
+  }
+}
+
+export default function App() {
+  const [sizeOfPizza, setSizeOfThePizza] = React.useState(30);
+  const [listWithPaidToppings, setListWithPaidToppings] = React.useState([]);
+  const [chosenDough, setChosenDough] = React.useState("");
+  const [chosenSuace, setChosenSuace] = React.useState("");
+  const price = calculateThePrice(sizeOfPizza, listWithPaidToppings);
+  const [
+    finalOrderComponentState,
+    setFinalOrderComponentState
+  ] = React.useState(false);
+
+  function makeAListWithPaidToppings(checkboxState, checkboxValue) {
+    if (checkboxState) {
+      return setListWithPaidToppings((oldElements) => [
+        ...oldElements,
+        checkboxValue
+      ]);
+    } else {
+      setListWithPaidToppings(
+        listWithPaidToppings.filter(
+          (newProduct) => newProduct !== checkboxValue
+        )
+      );
     }
-    setShowYourOrderComponent(() => !(showYourOrderComponent))
+  }
+
+  function showComponentWithFinalOrder(event) {
+    event.preventDefault();
+    setFinalOrderComponentState(!finalOrderComponentState);
   }
 
   return (
     <div>
       <Configurator
-        cost={cost}
-        setCost={setCost}
-        onClick={finalCostOfOrder}
-        formInput={formInput}
+        setSizeOfThePizza={setSizeOfThePizza}
+        makeAListWithPaidToppings={makeAListWithPaidToppings}
+        setChosenDough={setChosenDough}
+        setChosenSuace={setChosenSuace}
+        showComponentWithFinalOrder={showComponentWithFinalOrder}
+        price={price}
       />
       <br />
-      {showYourOrderComponent && <YourOrder
-        selected={selected}
-        cost = {cost}
-      />}
+      {finalOrderComponentState && (
+        <YourOrder
+          listWithPaidToppings={listWithPaidToppings}
+          chosenDough={chosenDough}
+          chosenSuace={chosenSuace}
+          sizeOfPizza={sizeOfPizza}
+          price={price}
+        />
+      )}
     </div>
   );
 }

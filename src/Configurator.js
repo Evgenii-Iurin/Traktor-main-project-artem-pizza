@@ -1,8 +1,15 @@
 import React from "react";
 
-export default function Configurator({ cost, setCost, onClick, formInput }) {
+export default function Configurator({
+  setSizeOfThePizza,
+  makeAListWithPaidToppings,
+  setChosenDough,
+  setChosenSuace,
+  showComponentWithFinalOrder,
+  price
+}) {
   return (
-    <form ref={formInput}>
+    <form>
       <fieldset>
         <legend>Choose pizza size</legend>
         <label>
@@ -10,10 +17,8 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
             type="radio"
             name="size"
             value="30 cm"
-            onChange={(event) => {
-              if (event.target.checked & (cost > 200)) {
-                setCost((cost) => cost - 50);
-              }
+            onChange={() => {
+              setSizeOfThePizza(30);
             }}
           />
           {" 30 cm"}
@@ -24,12 +29,8 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
             type="radio"
             name="size"
             value="35 cm"
-            onChange={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 50);
-              } else {
-                setCost((cost) => cost - 50);
-              }
+            onChange={() => {
+              setSizeOfThePizza(35);
             }}
           />
           {" 35 cm"}
@@ -39,26 +40,66 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
       <fieldset>
         <legend>Choose dough</legend>
         <label>
-          <input type="radio" name="dough" value="Thick crust" /> Thick crust
+          <input
+            type="radio"
+            name="dough"
+            value="Thick crust"
+            onChange={(event) => {
+              setChosenDough(event.target.value);
+            }}
+          />{" "}
+          Thick crust
         </label>
         <br />
         <label>
-          <input type="radio" name="dough" value="Thin crust" /> Thin crust
+          <input
+            type="radio"
+            name="dough"
+            value="Thin crust"
+            onChange={(event) => {
+              setChosenDough(event.target.value);
+            }}
+          />
+          {" Thin trust"}
         </label>
       </fieldset>
       <br />
       <fieldset>
         <legend>Choose sauce</legend>
         <label>
-          <input type="radio" name="sauce" value="Tomato" /> Tomato
+          <input
+            type="radio"
+            name="sauce"
+            value="Tomato"
+            onChange={(event) => {
+              setChosenSuace(event.target.value);
+            }}
+          />{" "}
+          Tomato
         </label>
         <br />
         <label>
-          <input type="radio" name="sauce" value="White" /> White
+          <input
+            type="radio"
+            name="sauce"
+            value="White"
+            onChange={(event) => {
+              setChosenSuace(event.target.value);
+            }}
+          />{" "}
+          White
         </label>
         <br />
         <label>
-          <input type="radio" name="sauce" value="Acute" /> Acute
+          <input
+            type="radio"
+            name="sauce"
+            value="Acute"
+            onChange={(event) => {
+              setChosenSuace(event.target.value);
+            }}
+          />{" "}
+          Acute
         </label>
       </fieldset>
       <br />
@@ -68,12 +109,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Mozzarella"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Mozzarella"}
@@ -83,12 +123,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Cheddar"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Cheddar"}
@@ -98,12 +137,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Dor blue"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Dor blue"}
@@ -116,12 +154,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Tomatoes"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Tomato"}
@@ -131,12 +168,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Mushrooms"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Mushrooms"}
@@ -146,12 +182,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Pepper"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Pepper"}
@@ -164,12 +199,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Bacon"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Bacon"}
@@ -179,12 +213,11 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Pepperoni"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Pepperoni"}
@@ -194,19 +227,20 @@ export default function Configurator({ cost, setCost, onClick, formInput }) {
           <input
             type="checkbox"
             value="Ham"
-            onInput={(event) => {
-              if (event.target.checked) {
-                setCost((cost) => cost + 29);
-              } else {
-                setCost((cost) => cost - 29);
-              }
+            onClick={(event) => {
+              makeAListWithPaidToppings(
+                event.target.checked,
+                event.target.value
+              );
             }}
           />
           {" Ham"}
         </label>
       </fieldset>
       <br />
-      <button onClick={onClick}>Final price of pizza: {cost}</button>
+      <button type="submit" onClick={showComponentWithFinalOrder}>
+        Final price of pizza: {price}
+      </button>
     </form>
   );
 }
