@@ -2,10 +2,15 @@ import React from "react";
 
 export default function Configurator({
   setSizeOfThePizza,
-  makeAListWithPaidToppings,
-  setChosenDough,
-  setChosenSuace,
-  showComponentWithFinalOrder,
+  addOrRemovePaidTopping,
+  setDough,
+  setSauce,
+  sauce,
+  dough,
+  paidToppings,
+  sizeOfPizza,
+  showOrder,
+  setShowOrder,
   price
 }) {
   return (
@@ -15,8 +20,7 @@ export default function Configurator({
         <label>
           <input
             type="radio"
-            name="size"
-            value="30 cm"
+            checked={sizeOfPizza === 30}
             onChange={() => {
               setSizeOfThePizza(30);
             }}
@@ -27,8 +31,7 @@ export default function Configurator({
         <label>
           <input
             type="radio"
-            name="size"
-            value="35 cm"
+            checked={sizeOfPizza === 35}
             onChange={() => {
               setSizeOfThePizza(35);
             }}
@@ -44,8 +47,9 @@ export default function Configurator({
             type="radio"
             name="dough"
             value="Thick crust"
+            checked={dough === "Thick crust"}
             onChange={(event) => {
-              setChosenDough(event.target.value);
+              setDough(event.target.value);
             }}
           />{" "}
           Thick crust
@@ -56,8 +60,9 @@ export default function Configurator({
             type="radio"
             name="dough"
             value="Thin crust"
+            checked={dough === "Thin crust"}
             onChange={(event) => {
-              setChosenDough(event.target.value);
+              setDough(event.target.value);
             }}
           />
           {" Thin trust"}
@@ -71,8 +76,9 @@ export default function Configurator({
             type="radio"
             name="sauce"
             value="Tomato"
+            checked={sauce === "Tomato"}
             onChange={(event) => {
-              setChosenSuace(event.target.value);
+              setSauce(event.target.value);
             }}
           />{" "}
           Tomato
@@ -83,8 +89,9 @@ export default function Configurator({
             type="radio"
             name="sauce"
             value="White"
+            checked={sauce === "White"}
             onChange={(event) => {
-              setChosenSuace(event.target.value);
+              setSauce(event.target.value);
             }}
           />{" "}
           White
@@ -95,8 +102,9 @@ export default function Configurator({
             type="radio"
             name="sauce"
             value="Acute"
+            checked={sauce === "Acute"}
             onChange={(event) => {
-              setChosenSuace(event.target.value);
+              setSauce(event.target.value);
             }}
           />{" "}
           Acute
@@ -109,12 +117,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Mozzarella"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Mozzarella")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Mozzarella"}
         </label>
@@ -123,12 +127,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Cheddar"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Cheddar")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Cheddar"}
         </label>
@@ -137,12 +137,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Dor blue"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Dor blue")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Dor blue"}
         </label>
@@ -154,12 +150,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Tomatoes"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Tomatoes")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Tomato"}
         </label>
@@ -168,12 +160,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Mushrooms"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Mushrooms")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Mushrooms"}
         </label>
@@ -182,12 +170,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Pepper"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Pepper")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Pepper"}
         </label>
@@ -199,12 +183,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Bacon"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Bacon")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Bacon"}
         </label>
@@ -213,12 +193,8 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Pepperoni"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Pepperoni")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Pepperoni"}
         </label>
@@ -227,18 +203,20 @@ export default function Configurator({
           <input
             type="checkbox"
             value="Ham"
-            onClick={(event) => {
-              makeAListWithPaidToppings(
-                event.target.checked,
-                event.target.value
-              );
-            }}
+            checked={paidToppings.includes("Ham")}
+            onChange={addOrRemovePaidTopping}
           />
           {" Ham"}
         </label>
       </fieldset>
       <br />
-      <button type="submit" onClick={showComponentWithFinalOrder}>
+      <button
+        type="submit"
+        onClick={(event) => {
+          event.preventDefault();
+          setShowOrder(!showOrder);
+        }}
+      >
         Final price of pizza: {price}
       </button>
     </form>

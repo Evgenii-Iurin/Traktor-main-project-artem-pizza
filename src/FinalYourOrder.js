@@ -1,9 +1,9 @@
 import React from "react";
 
 export default function YourOrder({
-  listWithPaidToppings,
-  chosenDough,
-  chosenSuace,
+  paidToppings,
+  dough,
+  sauce,
   sizeOfPizza,
   price
 }) {
@@ -11,11 +11,11 @@ export default function YourOrder({
     <div>
       <h3>Your order:</h3>
       <ul>
-        {listWithPaidToppings.map((item, i) => (
+        {paidToppings.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
-        <li>{chosenDough}</li>
-        <li>{chosenSuace}</li>
+        <li>{dough}</li>
+        <li>{sauce}</li>
       </ul>
       <p>The size of your pizza: {sizeOfPizza}</p>
       <p>Pay: {price}</p>

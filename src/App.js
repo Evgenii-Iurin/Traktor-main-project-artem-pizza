@@ -1,66 +1,56 @@
-import "./styles.css";
 import React from "react";
 import Configurator from "./Configurator";
 import YourOrder from "./FinalYourOrder";
 
-function calculateThePrice(size, countOfToppings) {
+function calculatePrice(size, toppings) {
   const costOfOneTopping = 29;
-  const currentPrice = countOfToppings.length * costOfOneTopping;
+  const basicPrice = 200;
+  const priceOfBigPizza = 250;
 
-  if (countOfToppings.length > 0) {
-    return size === 30 ? 200 + currentPrice : 250 + currentPrice;
-  } else {
-    return size === 30 ? 200 : 250;
-  }
+  const currentPrice = toppings.length * costOfOneTopping;
+
+  return size === 30
+    ? basicPrice + currentPrice
+    : priceOfBigPizza + currentPrice;
 }
 
 export default function App() {
   const [sizeOfPizza, setSizeOfThePizza] = React.useState(30);
-  const [listWithPaidToppings, setListWithPaidToppings] = React.useState([]);
-  const [chosenDough, setChosenDough] = React.useState("");
-  const [chosenSuace, setChosenSuace] = React.useState("");
-  const price = calculateThePrice(sizeOfPizza, listWithPaidToppings);
-  const [
-    finalOrderComponentState,
-    setFinalOrderComponentState
-  ] = React.useState(false);
+  const [paidToppings, setPaidToppings] = React.useState([]);
+  const [dough, setDough] = React.useState("Thick crust");
+  const [sauce, setSauce] = React.useState("Tomato");
+  const [showOrder, setShowOrder] = React.useState(false);
+  const price = calculatePrice(sizeOfPizza, paidToppings);
 
-  function makeAListWithPaidToppings(checkboxState, checkboxValue) {
-    if (checkboxState) {
-      return setListWithPaidToppings((oldElements) => [
-        ...oldElements,
-        checkboxValue
-      ]);
-    } else {
-      setListWithPaidToppings(
-        listWithPaidToppings.filter(
-          (newProduct) => newProduct !== checkboxValue
-        )
-      );
-    }
-  }
+  function addOrRemovePaidTopping(event) {
+    const value = event.target.value;
 
-  function showComponentWithFinalOrder(event) {
-    event.preventDefault();
-    setFinalOrderComponentState(!finalOrderComponentState);
+    !paidToppings.includes(value)
+      ? setPaidToppings((oldElements) => [...oldElements, value])
+      : setPaidToppings(paidToppings.filter((toppings) => toppings !== value));
   }
 
   return (
     <div>
       <Configurator
         setSizeOfThePizza={setSizeOfThePizza}
-        makeAListWithPaidToppings={makeAListWithPaidToppings}
-        setChosenDough={setChosenDough}
-        setChosenSuace={setChosenSuace}
-        showComponentWithFinalOrder={showComponentWithFinalOrder}
+        addOrRemovePaidTopping={addOrRemovePaidTopping}
+        setShowOrder={setShowOrder}
+        setSauce={setSauce}
+        showOrder={showOrder}
+        sizeOfPizza={sizeOfPizza}
+        setDough={setDough}
+        dough={dough}
+        sauce={sauce}
+        paidToppings={paidToppings}
         price={price}
       />
       <br />
-      {finalOrderComponentState && (
+      {showOrder && (
         <YourOrder
-          listWithPaidToppings={listWithPaidToppings}
-          chosenDough={chosenDough}
-          chosenSuace={chosenSuace}
+          paidToppings={paidToppings}
+          dough={dough}
+          sauce={sauce}
           sizeOfPizza={sizeOfPizza}
           price={price}
         />
